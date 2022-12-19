@@ -150,10 +150,10 @@ void Term::print_left_curly_bracket(Term::Window& scr, int x, int y1, int y2) {
 
 void Term::render(Term::Window& scr, const Model& m, std::size_t cols) {
     scr.clear();
-    print_left_curly_bracket(scr, cols, 1, m.lines.size());
-    scr.print_str(
-        cols - 6, m.lines.size(),
-        std::to_string(m.cursor_row) + "," + std::to_string(m.cursor_col));
+    // print_left_curly_bracket(scr, cols, 1, m.lines.size());
+    // scr.print_str(
+    //     cols - 6, m.lines.size(),
+    //     std::to_string(m.cursor_row) + "," + std::to_string(m.cursor_col));
     for (std::size_t j = 0; j < m.lines.size(); j++) {
         if (j == 0) {
             scr.print_str(1, j + 1, m.prompt_string);
