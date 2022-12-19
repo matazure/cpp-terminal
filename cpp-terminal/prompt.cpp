@@ -157,10 +157,10 @@ void Term::render(Term::Window& scr, const Model& m, std::size_t cols) {
     for (std::size_t j = 0; j < m.lines.size(); j++) {
         if (j == 0) {
             scr.print_str(1, j + 1, m.prompt_string);
-            scr.fill_fg(1, j + 1, m.prompt_string.size(), m.lines.size(),
-                        Term::Bit4_reference::GREEN);
-            scr.fill_style(1, j + 1, m.prompt_string.size(), m.lines.size(),
-                           Term::Style::BOLD);
+            // scr.fill_fg(1, j + 1, m.prompt_string.size(), m.lines.size(),
+            //             Term::Bit4_reference::GREEN);
+            // scr.fill_style(1, j + 1, m.prompt_string.size(), m.lines.size(),
+            //                Term::Style::BOLD);
         } else {
             for (std::size_t i = 0; i < m.prompt_string.size() - 1; i++) {
                 scr.set_char(i + 1, j + 1, '.');
