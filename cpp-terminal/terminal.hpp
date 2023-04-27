@@ -51,12 +51,13 @@ public:
     return *this;
   }
 
+  void           store_and_restore();
+
 private:
   std::ofstream  cout;
   std::ofstream  cerr;
   std::ofstream  clog;
   std::ifstream  cin;
-  void           store_and_restore();
   void           setRawMode();
   void           attachConsole();
   void           detachConsole();
