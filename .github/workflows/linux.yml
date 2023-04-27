@@ -14,13 +14,13 @@ jobs:
   gcc:
     runs-on: ubuntu-latest
     name: gcc${{ matrix.version }} (c++${{ matrix.standard }})
-    container: ghcr.io/flagarde/ci-ubuntu-gcc-${{ matrix.version }}-x86_64:latest
+    container: flagarde/ci-ubuntu-gcc-${{ matrix.version }}-x86_64:latest
     strategy:
       fail-fast: false
       matrix:
         # Before 4.7 there is no Non-static data member initializers that's bad!
         version: [ 4.7, 4.8, 4.9, 5, 6, 7, 8, 9, 10, 11, 12 ]
-        standard: [ 11, 14, 17 ]
+        standard: [ 11, 14, 17, 20 ]
         exclude:
           # 4.6
           - version: 4.6
@@ -57,8 +57,13 @@ jobs:
             standard: 20
 
     steps:
-      - name: ⬇️ Install git & CMake
-        run: apt-get install --no-install-recommends -y git cmake
+      - name: ⬇️ Install git
+        run: apt-get update ; apt-get install --no-install-recommends -y git
+      - name: ⬇️ Setup CMake
+        uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: ^3
+          ninjaVersion: ^1.11.1
       - name: 📥 Checkout
         uses: actions/checkout@v3
         with:
@@ -83,12 +88,12 @@ jobs:
 
     runs-on: ubuntu-latest
     name: clang${{ matrix.version }} (c++${{ matrix.standard }})
-    container: ghcr.io/flagarde/ci-ubuntu-clang-${{ matrix.version }}-x86_64:latest
+    container: flagarde/ci-ubuntu-clang-${{ matrix.version }}-x86_64:latest
     strategy:
       fail-fast: false
       matrix:
         version: [ 3.5, 3.6, 3.7, 3.8, 3.9, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ]
-        standard: [ 11, 14, 17 ]
+        standard: [ 11, 14, 17, 20 ]
         exclude:
           # 3.5
           # 3.5 is buggy with c++14,c++17, skip it for now
@@ -113,10 +118,21 @@ jobs:
           # 3.9
           - version: 4
             standard: 20
+          # 6 has problem
+          - version: 6
+            standard: 20
+          # 7 has problem
+          - version: 7
+            standard: 20
 
     steps:
-      - name: ⬇️ Install git & CMake
-        run: apt-get install --no-install-recommends -y git cmake
+      - name: ⬇️ Install git
+        run: apt-get update ; apt-get install --no-install-recommends -y git
+      - name: ⬇️ Setup CMake
+        uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: ^3
+          ninjaVersion: ^1.11.1
       - name: 📥 Checkout
         uses: actions/checkout@v3
         with:
@@ -140,15 +156,20 @@ jobs:
   intel:
     runs-on: ubuntu-latest
     name: intel-oneapi (c++${{ matrix.standard }})
-    container: ghcr.io/flagarde/ci-ubuntu-gcc-11-x86_64:latest
+    container: flagarde/ci-ubuntu-gcc-11-x86_64:latest
     strategy:
       fail-fast: false
       matrix:
-        standard: [ 11, 14, 17 ]
+        standard: [ 11, 14, 17, 20 ]
 
     steps:
-      - name: ⬇️ Install git & CMake
-        run: apt-get install --no-install-recommends -y git cmake
+      - name: ⬇️ Install git
+        run: apt-get update ; apt-get install --no-install-recommends -y git
+      - name: ⬇️ Setup CMake
+        uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: ^3
+          ninjaVersion: ^1.11.1
       - name: 📥 Checkout
         uses: actions/checkout@v3
         with:

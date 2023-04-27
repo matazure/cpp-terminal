@@ -1,6 +1,12 @@
-#include <cpp-terminal/input.hpp>
-#include <exception>
+#include "cpp-terminal/input.hpp"
+#include "cpp-terminal/io.hpp"
+#include "cpp-terminal/terminal.hpp"
+#include "cpp-terminal/tty.hpp"
+
 #include <iostream>
-int main() {
-    std::cout << "Input from stdin: " << Term::read_stdin_alone() << std::endl;
+
+int main()
+{
+  Term::terminal.setOptions({Term::Option::NoClearScreen, Term::Option::NoSignalKeys, Term::Option::Cursor, Term::Option::Raw});
+  std::cout << "Input from stdin: " << Term::read_stdin() << std::endl;
 }
